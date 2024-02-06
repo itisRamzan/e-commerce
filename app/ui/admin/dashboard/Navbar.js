@@ -10,29 +10,18 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function AdminNavbar() {
     const router = useRouter();
     const navbarRef = useRef();
-    const [loggingOut, setLoggingOut] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
-
-    useEffect(() => {
-        if (loggingOut === true) {
-            handleLogout();
-        }
-    }, [loggingOut]);
+    const [loggingOut, setLoggingOut] = useState(false);
 
     const handleLogout = () => {
-        toast.success("Logged out successfully", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            onClose: () => {
-                document.cookie = "adminToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                router.replace("/admin/login");
-            }
-        });
+        setLoggingOut(true);
+        setTimeout(() => {
+            var allCookies = document.cookie.split(';');
+            for (var i = 0; i < allCookies.length; i++)
+                document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString();
+            setLoggingOut(false);
+            router.replace("/admin/login");
+        }, 800);
     }
 
     return (
@@ -67,11 +56,9 @@ export default function AdminNavbar() {
                         </Link>
                         <Link href="/admin/settings" className="cursor-pointer font-semibold p-2 hover:font-serif">Settings
                         </Link>
-                        <p onClick={() => {
-                            setLoggingOut(true);
-                        }}
-                            className="cursor-pointer font-semibold p-2 hover:font-serif">Logout
-                        </p>
+                        <button onClick={handleLogout}
+                            className="cursor-pointer font-semibold p-2 hover:font-serif bg-blue-400">Logout
+                        </button>
                     </div>
                 </div>
             </div>
