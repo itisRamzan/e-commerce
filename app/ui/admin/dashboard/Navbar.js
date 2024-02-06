@@ -57,7 +57,7 @@ export default function AdminNavbar() {
                         <Link href="/admin/settings" className="cursor-pointer font-semibold p-2 hover:font-serif">Settings
                         </Link>
                         <button onClick={handleLogout}
-                            className="cursor-pointer font-semibold p-2 hover:font-serif bg-blue-400">Logout
+                            className="cursor-pointer font-semibold p-2 hover:font-serif">Logout
                         </button>
                     </div>
                 </div>

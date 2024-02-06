@@ -1,7 +1,7 @@
 import AdminNavbar from "@/app/ui/admin/dashboard/Navbar";
 
 
-export default async function DashboardLayout({ children }) {
+export default async function AdminLayout({ children }) {
     return (
         <>
             <AdminNavbar />
