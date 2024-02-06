@@ -30,18 +30,27 @@ export async function addProduct(currentState, formData) {
     else {
         try {
             await connectDB();
-            let newProduct = new Product({
-                title: name,
-                description: description,
-                img: image,
-                category: category,
-                size: size,
-                color: color,
-                price: price,
-                availableQty: stock,
-                seller: sellerID
-            })
-            await newProduct.save();
+            let slug = name.replace(/\s+/g, '-').toLowerCase() + "-" + size.toLowerCase() + "-" + color.toLowerCase();
+            let product = await Product.findOne({ slug: slug });
+            if (product !== null) {
+                product.availableQty += parseInt(stock);
+                await product.save();
+            }
+            else {
+                let newProduct = new Product({
+                    title: name,
+                    description: description,
+                    img: image,
+                    category: category,
+                    size: size,
+                    color: color,
+                    price: price,
+                    availableQty: stock,
+                    slug: name.replace(/\s+/g, '-').toLowerCase() + "-" + size.toLowerCase() + "-" + color.toLowerCase(),
+                    seller: sellerID
+                })
+                await newProduct.save();
+            }
             return { status: 200, message: "Product added successfully" };
         }
         catch (err) {
@@ -50,21 +59,24 @@ export async function addProduct(currentState, formData) {
     }
 }
 
-export async function getProducts() {
+export async function getProducts(currentPage) {
     try {
-        await connectDB();
+        await connectDB()
         const cookieStore = cookies();
         let token = cookieStore.get('sellerToken')?.value;
         let data = await getSeller(token);
         if (data.status === 200) {
-            let products = await Product.find({ seller: data.id });
-            return { status: 200, products: products };
+            let totalProducts = await Product.find({ seller: data.id }).countDocuments();
+            let products = await Product.find({ seller: data.id }).sort({ createdAt: -1 }).skip((currentPage - 1) * 5).limit(5);
+            products = JSON.parse(JSON.stringify(products));
+            return { status: 200, products: products, length: totalProducts };
         }
         else {
             return { status: 400, message: "Please Login as a Seller" };
         }
     }
     catch (err) {
+        console.log(err.message)
         return { status: 500, message: "Internal server error" };
     }
 }
