@@ -49,35 +49,35 @@ export default function SellerNavbar() {
                     <div className="flex flex-col text-center w-full py-2 font-semibold">
                         <Link href="/seller/dashboard"
                             className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/dashboard" ? "bg-blue-300" : ""}
+                            ${pathname === "/seller/dashboard" ? "bg-blue-300 text-white" : ""}
                             `}
                         >
                             Home
                         </Link>
                         <Link href="/seller/products"
                             className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/products" ? "bg-blue-300" : ""}
+                            ${pathname === "/seller/products" ? "bg-blue-300 text-white" : ""}
                             `}
                         >
                             Products
                         </Link>
                         <Link href="/seller/orders"
                             className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/orders" ? "bg-blue-300" : ""}
+                            ${pathname === "/seller/orders" ? "bg-blue-300 text-white" : ""}
                             `}
                         >
                             Orders
                         </Link>
                         <Link href="/seller/customers"
                             className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/customers" ? "bg-blue-300" : ""}
+                            ${pathname === "/seller/customers" ? "bg-blue-300 text-white" : ""}
                             `}
                         >
                             Customers
                         </Link>
                         <Link href="/seller/settings"
                             className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/settings" ? "bg-blue-300" : ""}
+                            ${pathname === "/seller/settings" ? "bg-blue-300 text-white" : ""}
                             `}
                         >
                             Settings
