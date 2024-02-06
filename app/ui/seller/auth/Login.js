@@ -57,7 +57,7 @@ export default function LoginForm() {
         <>
             <div className="min-h-screen">
                 <ToastContainer />
-                <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-8">
+                <div className="flex flex-col min-h-full justify-center px-6 py-12 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600" alt="Your Company" />
                         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login as a Seller</h2>

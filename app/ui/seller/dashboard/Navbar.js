@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,6 +12,7 @@ export default function SellerNavbar() {
     const navbarRef = useRef();
     const [showNavbar, setShowNavbar] = useState(false);
     const [loggingOut, setLoggingOut] = useState(false);
+    const pathname = usePathname();
 
     const handleLogout = () => {
         setLoggingOut(true);
@@ -32,32 +33,57 @@ export default function SellerNavbar() {
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
             </div>
             <div className="fixed top-0" >
-                <div className={` shadow-sm border-r-2 border-blue-200 bg-blue-100 rounded-r-3xl min-h-screen overflow-auto transition-all w-14 fixed ${showNavbar === true ? "-left-4" : "left-0"} `}>
+                <div className={` shadow-sm bg-blue-400 rounded-r-3xl min-h-screen overflow-auto transition-all w-14 fixed z-50 ${showNavbar === true ? "-left-4" : "left-0"} `}>
                     <GoSidebarCollapse color="black" size={35}
                         className={`cursor-pointer absolute top-3 left-2 `}
                         onClick={() => setShowNavbar(!showNavbar)}
                     />
                 </div>
-                <div className={` shadow-sm border-r-2 border-blue-200 bg-blue-100 rounded-r-3xl flex flex-col min-h-screen w-40 items-center space-y-2 overflow-auto z-50 transition-all fixed ${showNavbar === false ? "-left-96" : "left-0"} `}>
+                <div className={` shadow-sm bg-blue-400 rounded-r-3xl min-h-screen overflow-auto transition-all w-40 fixed z-50 flex flex-col space-y-2  ${showNavbar === false ? "-left-96" : "left-0"} `}>
                     <div className="w-full p-5">
                         <GoSidebarExpand color="black" size={35}
                             className={`cursor-pointer absolute top-3 left-2 `}
                             onClick={() => setShowNavbar(!showNavbar)}
                         />
                     </div>
-                    <div className="flex flex-col space-y-3 text-center">
-                        <Link href="/seller/dashboard" className="cursor-pointer font-semibold p-2 hover:font-serif">Home
+                    <div className="flex flex-col text-center w-full py-2 font-semibold">
+                        <Link href="/seller/dashboard"
+                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
+                            ${pathname === "/seller/dashboard" ? "bg-blue-300" : ""}
+                            `}
+                        >
+                            Home
                         </Link>
-                        <Link href="/seller/products" className="cursor-pointer font-semibold p-2 hover:font-serif">Products
+                        <Link href="/seller/products"
+                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
+                            ${pathname === "/seller/products" ? "bg-blue-300" : ""}
+                            `}
+                        >
+                            Products
                         </Link>
-                        <Link href="/seller/orders" className="cursor-pointer font-semibold p-2 hover:font-serif">Orders
+                        <Link href="/seller/orders"
+                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
+                            ${pathname === "/seller/orders" ? "bg-blue-300" : ""}
+                            `}
+                        >
+                            Orders
                         </Link>
-                        <Link href="/seller/customers" className="cursor-pointer font-semibold p-2 hover:font-serif">Customers
+                        <Link href="/seller/customers"
+                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
+                            ${pathname === "/seller/customers" ? "bg-blue-300" : ""}
+                            `}
+                        >
+                            Customers
                         </Link>
-                        <Link href="/seller/settings" className="cursor-pointer font-semibold p-2 hover:font-serif">Settings
+                        <Link href="/seller/settings"
+                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
+                            ${pathname === "/seller/settings" ? "bg-blue-300" : ""}
+                            `}
+                        >
+                            Settings
                         </Link>
                         <button onClick={handleLogout}
-                            className="cursor-pointer font-semibold p-2 hover:font-serif">Logout
+                            className="cursor-pointer font-semibold p-2">Logout
                         </button>
                     </div>
                 </div>

@@ -4,8 +4,8 @@ export default async function DashboardPage() {
 
 
     return (
-        <div className="min-h-screen flex justify-center items-center">
+        <>
             <SellerHome />
-        </div>
+        </>
     );
 }
