@@ -7,7 +7,7 @@ import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AdminNavbar() {
+export default function SellerNavbar() {
     const router = useRouter();
     const navbarRef = useRef();
     const [showNavbar, setShowNavbar] = useState(false);
@@ -20,7 +20,7 @@ export default function AdminNavbar() {
             for (var i = 0; i < allCookies.length; i++)
                 document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString();
             setLoggingOut(false);
-            router.replace("/admin/login");
+            router.replace("/seller/login");
         }, 800);
     }
 
@@ -46,15 +46,15 @@ export default function AdminNavbar() {
                         />
                     </div>
                     <div className="flex flex-col space-y-3 text-center">
-                        <Link href="/admin/dashboard" className="cursor-pointer font-semibold p-2 hover:font-serif">Home
+                        <Link href="/seller/dashboard" className="cursor-pointer font-semibold p-2 hover:font-serif">Home
                         </Link>
-                        <Link href="/admin/products" className="cursor-pointer font-semibold p-2 hover:font-serif">Products
+                        <Link href="/seller/products" className="cursor-pointer font-semibold p-2 hover:font-serif">Products
                         </Link>
-                        <Link href="/admin/orders" className="cursor-pointer font-semibold p-2 hover:font-serif">Orders
+                        <Link href="/seller/orders" className="cursor-pointer font-semibold p-2 hover:font-serif">Orders
                         </Link>
-                        <Link href="/admin/customers" className="cursor-pointer font-semibold p-2 hover:font-serif">Customers
+                        <Link href="/seller/customers" className="cursor-pointer font-semibold p-2 hover:font-serif">Customers
                         </Link>
-                        <Link href="/admin/settings" className="cursor-pointer font-semibold p-2 hover:font-serif">Settings
+                        <Link href="/seller/settings" className="cursor-pointer font-semibold p-2 hover:font-serif">Settings
                         </Link>
                         <button onClick={handleLogout}
                             className="cursor-pointer font-semibold p-2 hover:font-serif">Logout

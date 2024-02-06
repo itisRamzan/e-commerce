@@ -4,19 +4,19 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import { adminSignup } from "@/app/helpers/adminAuth";
+import { sellerSignup } from "@/app/actions/sellerAuth";
 import { SubmitButton } from "./Submitbutton";
 import { useFormState } from 'react-dom';
 import { useRouter } from "next/navigation";
 
 
 export default function SignupForm() {
-    const [state, submitAction] = useFormState(adminSignup, null);
+    const [state, submitAction] = useFormState(sellerSignup, null);
     const router = useRouter();
 
     useEffect(() => {
-        if (document.cookie.includes("adminToken")) {
-            router.replace("/admin/dashboard");
+        if (document.cookie.includes("sellerToken")) {
+            router.replace("/seller/dashboard");
         }
     }, []);
 
@@ -46,6 +46,7 @@ export default function SignupForm() {
                 progress: undefined,
                 onClose: () => {
                     document.getElementById("singupForm").reset();
+                    router.replace("/seller/login")
                 },
             });
         }
@@ -63,7 +64,7 @@ export default function SignupForm() {
                             alt="Your Company"
                         />
                         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                            Sign up for Admin account
+                            Sign up for Seller account
                         </h2>
                     </div>
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -129,8 +130,8 @@ export default function SignupForm() {
                             </div>
                         </form>
                         <p className="mt-10 text-center text-sm text-gray-500">
-                            Already have an account? &nbsp;
-                            <Link href={"/admin/login"} className="font-semibold leading-6 text-blue-600 hover:text-blue-500" >
+                            Already have a seller account? &nbsp;
+                            <Link href={"/seller/login"} className="font-semibold leading-6 text-blue-600 hover:text-blue-500" >
                                 Login
                             </Link>
                         </p>

@@ -1,4 +1,4 @@
-import LoginForm from "@/app/ui/admin/auth/Login";
+import LoginForm from "@/app/ui/seller/auth/Login";
 
 
 export default async function LoginPage() {

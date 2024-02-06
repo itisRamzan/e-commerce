@@ -8,8 +8,8 @@ export function SubmitButton() {
     const pathname = usePathname();
 
     const openPage = {
-        "/admin/login": "Login",
-        "/admin/signup": "Sign up",
+        "/seller/login": "Login",
+        "/seller/signup": "Sign up",
     }
 
     return (

@@ -1,6 +1,6 @@
 "use server"
 
-import Admin from "@/models/Admin";
+import Seller from "@/models/Seller";
 import connectDB from "./connectDB";
 
 const bcryptjs = require("bcryptjs");
@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.NEXT_PUBLIC_JWT_SECRET;
 
 
-export async function adminSignup(currentState, formData) {
+export async function sellerSignup(currentState, formData) {
     let name = formData.get('name');
     let email = formData.get('email');
     let password = formData.get('password');
@@ -18,20 +18,20 @@ export async function adminSignup(currentState, formData) {
     else {
         try{
             await connectDB();
-            let admin = await Admin.findOne({ email: email });
-            if (admin) {
-                return { status: 400, message: "Admin with this email already exists" };
+            let seller = await Seller.findOne({ email: email });
+            if (seller) {
+                return { status: 400, message: "Seller with this email already exists" };
             }
             else {
                 let salt = bcryptjs.genSaltSync(10);
                 password = bcryptjs.hashSync(password, salt);
-                let newAdmin = new Admin({
+                let newSeller = new Seller({
                     name: name,
                     email: email,
                     password: password
                 });
-                await newAdmin.save();
-                return { status: 200, message: "Admin created successfully" };
+                await newSeller.save();
+                return { status: 200, message: "Seller created successfully" };
             }
         }
         catch (err) {
@@ -41,7 +41,7 @@ export async function adminSignup(currentState, formData) {
 
 }
 
-export async function adminLogin(currentState, formData) {
+export async function sellerLogin(currentState, formData) {
     let email = formData.get('email');
     let password = formData.get('password');
     if (email === "" || password === "") {
@@ -50,14 +50,14 @@ export async function adminLogin(currentState, formData) {
     else {
         try {
             await connectDB();
-            let admin = await Admin.findOne({ email: email });
-            if (admin) {
-                let isMatch = await bcryptjs.compare(password, admin.password);
+            let seller = await Seller.findOne({ email: email });
+            if (seller) {
+                let isMatch = await bcryptjs.compare(password, seller.password);
                 if (isMatch) {
                     let token = jwt.sign({
-                        id: admin._id,
-                        name: admin.name,
-                        email: admin.email
+                        id: seller._id,
+                        name: seller.name,
+                        email: seller.email
                     }, jwt_secret, { expiresIn: "24h" });
                     // let salt = bcryptjs.genSaltSync(10);
                     // token = bcryptjs.hashSync(token, salt);

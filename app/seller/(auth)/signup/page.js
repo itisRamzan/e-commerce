@@ -1,4 +1,4 @@
-import SignupForm from "@/app/ui/admin/auth/Signup";
+import SignupForm from "@/app/ui/seller/auth/Signup";
 
 export default async function SignupPage() {
 

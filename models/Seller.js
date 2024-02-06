@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const AdminSchema = new mongoose.Schema({
+const SellerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -27,4 +27,4 @@ const AdminSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-export default mongoose.models.admin || mongoose.model("admin", AdminSchema);
+export default mongoose.models.seller || mongoose.model("seller", SellerSchema);

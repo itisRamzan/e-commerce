@@ -4,19 +4,19 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import { adminLogin } from "@/app/helpers/adminAuth";
+import { sellerLogin } from "@/app/actions/sellerAuth";
 import { SubmitButton } from "./Submitbutton";
 import { useFormState } from 'react-dom';
 import { useRouter } from "next/navigation";
 
 
 export default function LoginForm() {
-    const [state, loginAction] = useFormState(adminLogin, null);
+    const [state, loginAction] = useFormState(sellerLogin, null);
     const router = useRouter();
 
     useEffect(() => {
-        if (document.cookie.includes("adminToken")) {
-            router.replace("/admin/dashboard");
+        if (document.cookie.includes("sellerToken")) {
+            router.replace("/seller/dashboard");
         }
     }, []);
 
@@ -31,7 +31,7 @@ export default function LoginForm() {
                 draggable: true,
                 progress: undefined,
                 onClose: () => {
-                    document.getElementById("singupForm").reset();
+                    document.getElementById("loginForm").reset();
                 },
             });
         }
@@ -46,8 +46,8 @@ export default function LoginForm() {
                 progress: undefined,
                 onClose: () => {
                     document.getElementById("loginForm").reset();
-                    document.cookie = `adminToken=${state?.token}`;
-                    router.replace("/admin/dashboard");
+                    document.cookie = `sellerToken=${state?.token}`;
+                    router.replace("/seller/dashboard");
                 },
             });
         }
@@ -60,7 +60,7 @@ export default function LoginForm() {
                 <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600" alt="Your Company" />
-                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login as an Admin</h2>
+                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login as a Seller</h2>
                     </div>
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form action={loginAction} className="space-y-6" id="loginForm">
@@ -80,7 +80,7 @@ export default function LoginForm() {
                                 <div className="flex items-center justify-between">
                                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                                     <div className="text-sm">
-                                        <Link href={"/forgotpassword"} className="font-semibold text-blue-600 hover:text-blue-500" >
+                                        <Link href={"/seller/forgotpassword"} className="font-semibold text-blue-600 hover:text-blue-500" >
                                             Forgot password?
                                         </Link>
                                     </div>
@@ -102,8 +102,8 @@ export default function LoginForm() {
                         </form>
 
                         <p className="mt-10 text-center text-sm text-gray-500">
-                            Not an Admin? &nbsp;
-                            <Link href={"/admin/signup"} className="font-semibold leading-6 text-blue-600 hover:text-blue-500" >
+                            Not a Seller? &nbsp;
+                            <Link href={"/seller/signup"} className="font-semibold leading-6 text-blue-600 hover:text-blue-500" >
                                 Sign up now
                             </Link>
                         </p>
