@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const jwt_secret = process.env.NEXT_PUBLIC_JWT_SECRET;
+const jwt_secret = process.env.JWT_SECRET;
 
 
 export async function sellerSignup(currentState, formData) {

@@ -1,7 +1,7 @@
 "use server"
 
 const mongoose = require("mongoose");
-const dbURL = process.env.NEXT_PUBLIC_DB_URL;
+const dbURL = process.env.DB_URL;
 
 export default async function connectDB(){
     if (!mongoose.connections[0].readyState) {
