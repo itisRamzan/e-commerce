@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function SellerNavbar() {
     const router = useRouter();
-    const navbarRef = useRef();
     const [showNavbar, setShowNavbar] = useState(false);
     const [loggingOut, setLoggingOut] = useState(false);
     const pathname = usePathname();
@@ -17,12 +16,12 @@ export default function SellerNavbar() {
     const handleLogout = () => {
         setLoggingOut(true);
         setTimeout(() => {
-            var allCookies = document.cookie.split(';');
-            for (var i = 0; i < allCookies.length; i++)
-                document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString();
+            let allCookies = document.cookie.split(';');
+            for (let i = 0; i < allCookies.length; i++)
+                document.cookie = allCookies[i] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             setLoggingOut(false);
             router.replace("/seller/login");
-        }, 800);
+        }, 500);
     }
 
     return (
@@ -32,10 +31,10 @@ export default function SellerNavbar() {
                 <ToastContainer />
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
             </div>
-            <div className="fixed top-0" >
-                <div className={` shadow-sm bg-blue-400 rounded-r-3xl min-h-screen overflow-auto transition-all w-14 fixed z-50 ${showNavbar === true ? "-left-4" : "left-0"} `}>
+            <div className="fixed top-0 z-50" >
+                <div className={`  min-h-screen overflow-auto transition-all w-14 max-md:w-12 fixed z-50 ${showNavbar === true ? "-left-4" : "left-0"} `}>
                     <GoSidebarCollapse color="black" size={35}
-                        className={`cursor-pointer absolute top-3 left-2 `}
+                        className={`cursor-pointer absolute top-3 left-2 max-md:top-2 max-md:left-1 `}
                         onClick={() => setShowNavbar(!showNavbar)}
                     />
                 </div>

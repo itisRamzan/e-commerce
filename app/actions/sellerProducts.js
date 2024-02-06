@@ -2,8 +2,11 @@
 
 import Product from "@/models/Product";
 import connectDB from "./connectDB";
+import { cookies } from "next/headers";
+import { getSeller } from "./sellerAuth";
 
 export async function addProduct(currentState, formData) {
+    const cookieStore = cookies();
     let name = formData.get('name').trim();
     let price = formData.get('price');
     let category = formData.get('category');
@@ -12,7 +15,12 @@ export async function addProduct(currentState, formData) {
     let size = formData.get('size');
     let description = formData.get('description').trim();
     let image = formData.get('image');
-    let sellerID = formData.get('sellerID').trim();
+    let token = cookieStore.get('sellerToken').value;
+    let data = await getSeller(token);
+    if (data.status !== 200) {
+        return { status: 400, message: "Please Login as a Seller" };
+    }
+    let sellerID = data.id;
     if (sellerID === null || sellerID === undefined || sellerID === "") {
         return { status: 400, message: "Please Login as a Seller" };
     }
@@ -39,5 +47,24 @@ export async function addProduct(currentState, formData) {
         catch (err) {
             return { status: 500, message: "Internal server error" };
         }
+    }
+}
+
+export async function getProducts() {
+    try {
+        await connectDB();
+        const cookieStore = cookies();
+        let token = cookieStore.get('sellerToken')?.value;
+        let data = await getSeller(token);
+        if (data.status === 200) {
+            let products = await Product.find({ seller: data.id });
+            return { status: 200, products: products };
+        }
+        else {
+            return { status: 400, message: "Please Login as a Seller" };
+        }
+    }
+    catch (err) {
+        return { status: 500, message: "Internal server error" };
     }
 }

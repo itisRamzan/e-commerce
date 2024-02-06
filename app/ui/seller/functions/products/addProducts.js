@@ -1,38 +1,20 @@
 "use client"
 
-import { getSeller } from "@/app/actions/sellerAuth";
 import { SubmitButton } from "../../auth/Submitbutton";
 import { addProduct } from "@/app/actions/sellerProducts";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AddProducts() {
-    const router = useRouter();
-    const [sellerID, setSellerID] = useState("");
     const [state, addProductFormAction] = useFormState(addProduct, null);
-
-    useEffect(() => {
-        let token = document.cookie.split(";")[0].slice(12);
-        if (token === "") {
-            router.replace("/seller/login");
-        }
-        else {
-            const fetchSeller = async () => {
-                let response = await getSeller(token);
-                setSellerID(response.id);
-            }
-            fetchSeller();
-        }
-    }, []);
 
     useEffect(() => {
         if (state?.status === 200) {
             toast.success(state?.message, {
                 position: "top-right",
-                autoClose: 1800,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -63,10 +45,10 @@ export default function AddProducts() {
         <>
             <div>
                 <ToastContainer />
-                <h1 className="text-2xl font-bold mb-4">Add Product</h1>
+                <h1 className="text-lg md:text-2xl font-bold mb-4">Add Product</h1>
                 <form action={addProductFormAction} id="addProductForm">
-                    <div className="flex flex-col space-y-4">
-                        <div className="flex flex-col">
+                    <div className="flex flex-col space-y-4 max-md:text-sm">
+                        <div className="flex flex-col space-y-1 md:space-y-2">
                             <label htmlFor="name">Name</label>
                             <input
                                 type="text"
@@ -77,8 +59,8 @@ export default function AddProducts() {
                                 required={true}
                             />
                         </div>
-                        <div className="flex flex-row flex-wrap items-center justify-between">
-                            <div className="flex flex-col space-y-3 my-2 mr-2">
+                        <div className="flex flex-row flex-wrap items-center lg:justify-between">
+                            <div className="flex flex-col space-y-1 md:space-y-2 my-2 mr-4">
                                 <label htmlFor="price">Price (in Rupees)</label>
                                 <input
                                     type="number"
@@ -90,7 +72,7 @@ export default function AddProducts() {
                                     min={1}
                                 />
                             </div>
-                            <div className="flex flex-col space-y-3 my-2 mr-2">
+                            <div className="flex flex-col space-y-1 md:space-y-2 my-2 mr-4">
                                 <label htmlFor="category">Category</label>
                                 <select
                                     name="category"
@@ -103,7 +85,7 @@ export default function AddProducts() {
                                     <option value="Pants">Pant</option>
                                 </select>
                             </div>
-                            <div className="flex flex-col space-y-3 my-2 mr-2">
+                            <div className="flex flex-col space-y-1 md:space-y-2 my-2 mr-4">
                                 <label htmlFor="stock">Stock</label>
                                 <input
                                     type="number"
@@ -115,7 +97,7 @@ export default function AddProducts() {
                                     min={1}
                                 />
                             </div>
-                            <div className="flex flex-col space-y-3 my-2 mr-2">
+                            <div className="flex flex-col space-y-1 md:space-y-2 my-2 mr-4">
                                 <label htmlFor="color">Color</label>
                                 <input
                                     type="text"
@@ -124,7 +106,7 @@ export default function AddProducts() {
                                     className="border border-gray-300 p-2 rounded"
                                 />
                             </div>
-                            <div className="flex flex-col space-y-3 my-2 mr-2">
+                            <div className="flex flex-col space-y-1 md:space-y-2 my-2">
                                 <label htmlFor="size"
                                 >Size</label>
                                 <select
@@ -138,9 +120,8 @@ export default function AddProducts() {
                                     <option value="XL">XL</option>
                                 </select>
                             </div>
-                            <input type="hidden" name="sellerID" value={sellerID} />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col space-y-1 md:space-y-2">
                             <label htmlFor="description">Description</label>
                             <textarea
                                 id="description"
@@ -150,7 +131,7 @@ export default function AddProducts() {
                                 required={true}
                             />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col space-y-1 md:space-y-2">
                             <label htmlFor="image">Image URL (for now)</label>
                             <input
                                 type="text"

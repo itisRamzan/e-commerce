@@ -46,7 +46,6 @@ export default function LoginForm() {
                 progress: undefined,
                 onClose: () => {
                     document.getElementById("loginForm").reset();
-                    document.cookie = `sellerToken=${state?.token}`;
                     router.replace("/seller/dashboard");
                 },
             });

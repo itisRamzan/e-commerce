@@ -2,6 +2,7 @@
 
 import Seller from "@/models/Seller";
 import connectDB from "./connectDB";
+import { cookies } from "next/headers";
 
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -61,6 +62,7 @@ export async function sellerLogin(currentState, formData) {
                     }, jwt_secret, { expiresIn: "24h" });
                     // let salt = bcryptjs.genSaltSync(10);
                     // token = bcryptjs.hashSync(token, salt);
+                    cookies().set("sellerToken", token);
                     return { status: 200, token: token, message: "Login successful" };
                 }
                 else {
@@ -84,6 +86,6 @@ export async function getSeller(token) {
         return { status: 200, id: decoded.id };
     }
     catch (err) {
-        return { status: 500, message: "Internal server error" };
+        return { status: 500, message: "Invalid Session" };
     }
 }
