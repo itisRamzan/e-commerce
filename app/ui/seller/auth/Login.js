@@ -97,7 +97,7 @@ export default function LoginForm() {
                             </div>
 
                             <div>
-                                <SubmitButton />
+                                <SubmitButton title="Log in" />
                             </div>
                         </form>
 

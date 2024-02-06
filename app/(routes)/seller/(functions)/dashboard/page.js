@@ -1,4 +1,4 @@
-import SellerHome from "@/app/ui/seller/dashboard/Home";
+import SellerHome from "@/app/ui/seller/functions/Home";
 
 export default async function DashboardPage() {
 

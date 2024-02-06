@@ -16,7 +16,7 @@ export async function sellerSignup(currentState, formData) {
         return { status: 400, message: "All fields are required" };
     }
     else {
-        try{
+        try {
             await connectDB();
             let seller = await Seller.findOne({ email: email });
             if (seller) {
@@ -75,5 +75,15 @@ export async function sellerLogin(currentState, formData) {
             return { status: 500, message: "Internal server error" };
         }
 
+    }
+}
+
+export async function getSeller(token) {
+    try {
+        let decoded = jwt.verify(token, jwt_secret);
+        return { status: 200, id: decoded.id };
+    }
+    catch (err) {
+        return { status: 500, message: "Internal server error" };
     }
 }

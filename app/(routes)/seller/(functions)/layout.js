@@ -1,4 +1,4 @@
-import SellerNavbar from "@/app/ui/seller/dashboard/Navbar";
+import SellerNavbar from "@/app/ui/seller/Navbar";
 
 
 

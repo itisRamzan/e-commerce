@@ -1,7 +1,9 @@
+import ProducstsPage from "@/app/ui/seller/functions/Products";
+
 export default async function ProductPage() {
     return (
-        <div>
-            <h1>Product Page</h1>
-        </div>
+        <>
+            <ProducstsPage />
+        </>
     )
 }

@@ -126,7 +126,7 @@ export default function SignupForm() {
                                 </div>
                             </div>
                             <div>
-                                <SubmitButton />
+                                <SubmitButton title="Sign up" />
                             </div>
                         </form>
                         <p className="mt-10 text-center text-sm text-gray-500">
