@@ -1,9 +1,11 @@
+import AdminNavbar from "@/app/ui/admin/dashboard/Navbar";
 
 
-export default function DashboardLayout({ children }) {
+export default async function DashboardLayout({ children }) {
     return (
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
-        </div>
+        <>
+            <AdminNavbar />
+            <div>{children}</div>
+        </>
     );
 }

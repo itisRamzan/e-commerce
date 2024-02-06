@@ -1,9 +1,16 @@
-'use client'
+"use client"
 
 import { useFormStatus } from "react-dom";
+import { usePathname } from "next/navigation";
 
 export function SubmitButton() {
-    const { pending, data } = useFormStatus();
+    const { pending } = useFormStatus();
+    const pathname = usePathname();
+
+    const openPage = {
+        "/admin/login": "Login",
+        "/admin/signup": "Sign up",
+    }
 
     return (
         <>
@@ -13,7 +20,7 @@ export function SubmitButton() {
                 disabled={pending}
             >
                 <p className={` ${pending === true ? "hidden" : ""} `}>
-                    Sign up
+                    { openPage[pathname] }
                 </p>
                 <div className={` ${pending === true ? "flex justify-center items-center" : "hidden"}  `}>
                     <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white">

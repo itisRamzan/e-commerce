@@ -7,10 +7,18 @@ import Link from "next/link";
 import { adminSignup } from "@/app/helpers/adminAuth";
 import { SubmitButton } from "./Submitbutton";
 import { useFormState } from 'react-dom';
+import { useRouter } from "next/navigation";
 
 
 export default function SignupForm() {
     const [state, submitAction] = useFormState(adminSignup, null);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (document.cookie.includes("adminToken")) {
+            router.replace("/admin/dashboard");
+        }
+    }, []);
 
     useEffect(() => {
         if (state?.status !== 200) {
