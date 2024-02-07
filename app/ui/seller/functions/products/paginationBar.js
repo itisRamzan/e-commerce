@@ -12,12 +12,14 @@ export default function PaginationBar({ productsLength, currentPage }) {
     return (
         <>
             <nav
-                className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+                className="flex items-center flex-col flex-wrap md:flex-row justify-between pt-4"
                 aria-label="Table navigation"
             >
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                     Showing <span className="font-semibold text-gray-900">
-                        {currentPage * noOfProductsPerPage - noOfProductsPerPage + 1}   -   {currentPage * noOfProductsPerPage > productsLength ? productsLength : currentPage * noOfProductsPerPage}
+                        {
+                            productsLength === 0 ? "0 - 0" : `${(currentPage - 1) * noOfProductsPerPage + 1} - ${currentPage * noOfProductsPerPage > productsLength ? productsLength : currentPage * noOfProductsPerPage}`
+                        }
                     </span> of{" "}
                     <span className="font-semibold text-gray-900">
                         {productsLength}
@@ -58,7 +60,7 @@ export default function PaginationBar({ productsLength, currentPage }) {
                     <li>
                         <button
                             className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 disabled:cursor-not-allowed disabled:hover:bg-white disabled:text-gray-500"
-                            disabled={currentPage === noOfPages}
+                            disabled={currentPage === noOfPages || noOfPages === 0}
                             onClick={(e) => {
                                 e.preventDefault();
                                 router.push(pathname + `?page=${currentPage + 1}` + "#myProducts")

@@ -1,14 +1,20 @@
 "use client"
 
+import Image from "next/image";
 import { SubmitButton } from "../../auth/Submitbutton";
 import { addProduct } from "@/app/actions/sellerProducts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getSignature } from "@/app/actions/uploadImage";
+import { IoCloseCircle } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export default function AddProducts() {
     const [state, addProductFormAction] = useFormState(addProduct, null);
+    const [image, setImage] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
         if (state?.status === 200) {
@@ -21,7 +27,9 @@ export default function AddProducts() {
                 draggable: true,
                 progress: undefined,
                 onClose: () => {
+                    setImage("");
                     document.getElementById("addProductForm").reset();
+                    router.push("/seller/products#myProducts");
                 },
             });
         }
@@ -36,6 +44,7 @@ export default function AddProducts() {
                 progress: undefined,
                 onClose: () => {
                     document.getElementById("addProductForm").reset();
+                    setImage("");
                 },
             });
         }
@@ -118,6 +127,7 @@ export default function AddProducts() {
                                     <option value="M">M</option>
                                     <option value="L">L</option>
                                     <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
                                 </select>
                             </div>
                         </div>
@@ -132,15 +142,60 @@ export default function AddProducts() {
                             />
                         </div>
                         <div className="flex flex-col space-y-1 md:space-y-2">
-                            <label htmlFor="image">Image URL (for now)</label>
-                            <input
-                                type="text"
-                                id="image"
-                                name="image"
-                                required={true}
-                                placeholder="Product Image"
-                                className="border border-gray-300 p-2 rounded"
-                            />
+                            <label htmlFor="image">Image</label>
+                            <div className="flex flex-col max-md:space-y-4 md:flex-row items-center md:justify-evenly">
+                                <input
+                                    type="file"
+                                    name="image"
+                                    accept="image/*"
+                                    id="image"
+                                    required={true}
+                                    onChange={(e) => {
+                                        if (e.target.files[0]?.type !== "image/png" && e.target.files[0]?.type !== "image/jpeg") {
+                                            e.target.value = "";
+                                            toast.error("Please select only Images", {
+                                                position: "top-right",
+                                                autoClose: 800,
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: false,
+                                                draggable: false,
+                                                progress: undefined,
+                                                onClose: () => {
+                                                    setImage("");
+                                                },
+                                            });
+                                        }
+                                        else {
+                                            setImage(URL.createObjectURL(e.target.files[0]));
+                                        }
+                                    }}
+                                />
+                                {image && (
+                                    <>
+                                        <div className="border border-gray-300 px-2 pb-2 pt-1 max-md:w-full max-md:h-[20.5rem] rounded md:flex md:flex-col space-y-1 ">
+                                            <IoCloseCircle
+                                                size={20}
+                                                className="cursor-pointer"
+                                                onClick={() => {
+                                                    setImage("");
+                                                    document.getElementById("image").value = "";
+                                                }}
+                                            />
+                                            <Image src={image} alt="Product Image"
+                                                className="rounded w-fit md:h-60 md:w-60" height={100} width={100}
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                                {
+                                    !image && (
+                                        <div className="border border-gray-300 rounded flex px-2 pb-2 pt-1 h-64 w-64 items-center justify-center">
+                                            No Image Selected
+                                        </div>
+                                    )
+                                }
+                            </div>
                         </div>
                         <SubmitButton title="Add Product" />
                     </div>

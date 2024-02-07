@@ -9,8 +9,8 @@ export default async function ProductsTable({ currentPage }) {
 
     return (
         <>
-            <table className="hidden min-w-full text-gray-900 md:table" id="myProducts">
-                <thead className="rounded-lg text-left text-sm font-normal">
+            <table className="min-w-full text-gray-900 overflow-x-auto" id="myProducts">
+                <thead className="rounded-lg text-left text-sm font-normal overflow-x-auto">
                     <tr>
                         <th className="px-4 py-5 font-medium sm:pl-6 text-left">Product</th>
                         <th className="px-4 py-5 font-medium sm:pl-6 text-center">Price (in Rupees) </th>
@@ -21,26 +21,28 @@ export default async function ProductsTable({ currentPage }) {
                         <th className="px-4 py-5 font-medium sm:pl-6 text-center">Actions</th>
                     </tr>
                 </thead>
-                <tbody className="bg-white">
+                <tbody className="bg-white overflow-x-auto">
                     {products?.map((product) => (
                         <tr
                             key={product._id}
                             className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                         >
                             <td className="py-3 pl-6 pr-3 text-center">
-                                <div className="flex items-center gap-3">
+                                <div className="flex max-md:flex-col items-center md:gap-3">
                                     <Image
                                         src={product.img.toString()}
-                                        className="rounded-full"
-                                        width={28}
-                                        height={28}
+                                        className="object-cover rounded-lg object-center w-[8rem] md:w-16 md:h-16"
+                                        width={50}
+                                        height={50}
                                         alt={product.title}
                                     />
-                                    {product.title}
+                                    <p className="max-md:text-sm">
+                                        {product.title}
+                                    </p>
                                 </div>
                             </td>
                             <td className="text-center px-4">
-                                {product.price}
+                                ₹‎ {product.price}
                             </td>
                             <td className="text-center px-4">
                                 {product.category}
@@ -64,7 +66,7 @@ export default async function ProductsTable({ currentPage }) {
                     ))}
                 </tbody>
             </table>
-            
+
         </>
     )
 }

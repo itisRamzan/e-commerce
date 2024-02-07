@@ -4,6 +4,8 @@ import Product from "@/models/Product";
 import connectDB from "./connectDB";
 import { cookies } from "next/headers";
 import { getSeller } from "./sellerAuth";
+import { getSignature, uploadImage } from "./uploadImage";
+import { revalidatePath } from "next/cache";
 
 export async function addProduct(currentState, formData) {
     const cookieStore = cookies();
@@ -30,17 +32,20 @@ export async function addProduct(currentState, formData) {
     else {
         try {
             await connectDB();
+            let res = await uploadImage(formData);
             let slug = name.replace(/\s+/g, '-').toLowerCase() + "-" + size.toLowerCase() + "-" + color.toLowerCase();
-            let product = await Product.findOne({ slug: slug });
-            if (product !== null) {
+            let product = await Product.findOne({ slug: slug, seller: sellerID });
+            if (product !== null) { // if product already exists
                 product.availableQty += parseInt(stock);
+                product.img = res?.imageURL;
                 await product.save();
+                return { status: 200, message: "Product already exists, Stock and Image updated successfully!" };
             }
             else {
                 let newProduct = new Product({
                     title: name,
                     description: description,
-                    img: image,
+                    img: res?.imageURL,
                     category: category,
                     size: size,
                     color: color,
@@ -50,8 +55,9 @@ export async function addProduct(currentState, formData) {
                     seller: sellerID
                 })
                 await newProduct.save();
+                revalidatePath("/seller/products#myProducts");
+                return { status: 200, message: "Product added successfully" };
             }
-            return { status: 200, message: "Product added successfully" };
         }
         catch (err) {
             return { status: 500, message: "Internal server error" };
@@ -69,6 +75,7 @@ export async function getProducts(currentPage) {
             let totalProducts = await Product.find({ seller: data.id }).countDocuments();
             let products = await Product.find({ seller: data.id }).sort({ createdAt: -1 }).skip((currentPage - 1) * 5).limit(5);
             products = JSON.parse(JSON.stringify(products));
+            revalidatePath("/seller/products");
             return { status: 200, products: products, length: totalProducts };
         }
         else {

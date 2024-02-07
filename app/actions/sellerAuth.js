@@ -62,7 +62,13 @@ export async function sellerLogin(currentState, formData) {
                     }, jwt_secret, { expiresIn: "24h" });
                     // let salt = bcryptjs.genSaltSync(10);
                     // token = bcryptjs.hashSync(token, salt);
-                    cookies().set("sellerToken", token);
+                    cookies().set("sellerToken", token, {
+                        path: "/",
+                        maxAge: 60 * 60 * 24 * 2, // 2 days
+                        sameSite: "lax",
+                        secure: process.env.NODE_ENV === "production",
+                        httpOnly: true
+                    });
                     return { status: 200, token: token, message: "Login successful" };
                 }
                 else {

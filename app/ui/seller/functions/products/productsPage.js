@@ -9,7 +9,7 @@ export default async function ProductsPage({ props, searchParams }) {
 
     return (
         <div className="flex flex-col space-y-4">
-            <div className="bg-blue-50 rounded-lg p-6 md:pt-0">
+            <div className="bg-blue-50 rounded-lg p-6 md:pt-0 overflow-x-auto">
                 <Suspense fallback={<>Loading....</>} >
                     <ProductsTable currentPage={Number(searchParams.page)} />
                 </Suspense>
