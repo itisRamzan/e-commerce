@@ -4,24 +4,25 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import { sellerLogin } from "@/app/actions/sellerAuth";
+import { userLogin } from "@/app/actions/userAuth";
 import { SubmitButton } from "../../Submitbutton";
 import { useFormState } from 'react-dom';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { sellerAuth } from "@/middlewares/auth";
+import { userAuth } from "@/middlewares/auth";
 
 
 export default function LoginForm() {
-    const [state, loginAction] = useFormState(sellerLogin, null);
+    const [state, loginAction] = useFormState(userLogin, null);
     const router = useRouter();
 
     useEffect(() => {
-        sellerAuth().then((res) => {
+        userAuth().then((res) => {
             if (res) {
-                router.replace("/seller/dashboard");
+                router.replace("/");
             }
         })
+
     }, []);
 
     useEffect(() => {
@@ -50,7 +51,7 @@ export default function LoginForm() {
                 progress: undefined,
                 onClose: () => {
                     document.getElementById("loginForm").reset();
-                    router.replace("/seller/dashboard");
+                    router.replace("/");
                 },
             });
         }
@@ -64,7 +65,7 @@ export default function LoginForm() {
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center justify-center">
                         <Image src="/logo.png" alt="logo" width={100} height={100}
                         />
-                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login as a Seller</h2>
+                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login to your Account</h2>
                     </div>
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form action={loginAction} className="space-y-6" id="loginForm">
@@ -84,7 +85,7 @@ export default function LoginForm() {
                                 <div className="flex items-center justify-between">
                                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                                     <div className="text-sm">
-                                        <Link href={"/seller/forgotpassword"} className="font-semibold text-blue-600 hover:text-blue-500" >
+                                        <Link href={"/forgotpassword"} className="font-semibold text-blue-600 hover:text-blue-500" >
                                             Forgot password?
                                         </Link>
                                     </div>
@@ -106,8 +107,8 @@ export default function LoginForm() {
                         </form>
 
                         <p className="mt-10 text-center text-sm text-gray-500">
-                            Not a Seller? &nbsp;
-                            <Link href={"/seller/signup"} className="font-semibold leading-6 text-blue-600 hover:text-blue-500" >
+                            Don't have an acccount? &nbsp;
+                            <Link href={"/signup"} className="font-semibold leading-6 text-blue-600 hover:text-blue-500" >
                                 Sign up now
                             </Link>
                         </p>

@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { SubmitButton } from "../../auth/Submitbutton";
+import { SubmitButton } from "../../../Submitbutton";
 import { addProduct } from "@/app/actions/sellerProducts";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";

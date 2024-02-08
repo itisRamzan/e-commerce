@@ -1,11 +1,21 @@
-const { cookies } = require("next/headers");
+"use server"
 
-export async function sellerAuth() {
-    const authStatus = cookies().has("sellerToken");
-    return authStatus;
-}
+import { cookies } from "next/headers"
 
 export async function userAuth() {
-    const authStatus = cookies().has("userToken");
-    return authStatus;
+    if (cookies().get("userToken")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+export async function sellerAuth() {
+    if (cookies().get("sellerToken")) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }

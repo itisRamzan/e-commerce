@@ -1,6 +1,6 @@
 "use server"
 
-import Seller from "@/models/Seller";
+import User from "@/models/User";
 import connectDB from "./connectDB";
 import { cookies } from "next/headers";
 
@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.JWT_SECRET;
 
 
-export async function sellerSignup(currentState, formData) {
+export async function userSignup(currentState, formData) {
     let name = formData.get('name');
     let email = formData.get('email');
     let password = formData.get('password');
@@ -19,20 +19,20 @@ export async function sellerSignup(currentState, formData) {
     else {
         try {
             await connectDB();
-            let seller = await Seller.findOne({ email: email });
-            if (seller) {
-                return { status: 400, message: "Seller with this email already exists" };
+            let user = await User.findOne({ email: email });
+            if (user) {
+                return { status: 400, message: "Email already taken" };
             }
             else {
                 let salt = bcryptjs.genSaltSync(10);
                 password = bcryptjs.hashSync(password, salt);
-                let newSeller = new Seller({
+                let newUser = new User({
                     name: name,
                     email: email,
                     password: password
                 });
-                await newSeller.save();
-                return { status: 200, message: "Seller created successfully" };
+                await newUser.save();
+                return { status: 200, message: "Signed up succesfully, please login" };
             }
         }
         catch (err) {
@@ -42,7 +42,7 @@ export async function sellerSignup(currentState, formData) {
 
 }
 
-export async function sellerLogin(currentState, formData) {
+export async function userLogin(currentState, formData) {
     let email = formData.get('email');
     let password = formData.get('password');
     if (email === "" || password === "") {
@@ -51,18 +51,18 @@ export async function sellerLogin(currentState, formData) {
     else {
         try {
             await connectDB();
-            let seller = await Seller.findOne({ email: email });
-            if (seller) {
-                let isMatch = await bcryptjs.compare(password, seller.password);
+            let user = await User.findOne({ email: email });
+            if (user) {
+                let isMatch = await bcryptjs.compare(password, user.password);
                 if (isMatch) {
                     let token = jwt.sign({
-                        id: seller._id,
-                        name: seller.name,
-                        email: seller.email
+                        id: user._id,
+                        name: user.name,
+                        email: user.email
                     }, jwt_secret, { expiresIn: "2d" });
                     // let salt = bcryptjs.genSaltSync(10);
                     // token = bcryptjs.hashSync(token, salt);
-                    cookies().set("sellerToken", token, {
+                    cookies().set("userToken", token, {
                         path: "/",
                         maxAge: 60 * 60 * 24 * 2, // 2 days
                         sameSite: "lax",
@@ -86,18 +86,18 @@ export async function sellerLogin(currentState, formData) {
     }
 }
 
-export async function getSeller(token) {
-    try {
-        let decoded = jwt.verify(token, jwt_secret);
-        return { status: 200, id: decoded.id };
-    }
-    catch (err) {
-        return { status: 500, message: "Invalid Session" };
-    }
-}
+// export async function getSeller(token) {
+//     try {
+//         let decoded = jwt.verify(token, jwt_secret);
+//         return { status: 200, id: decoded.id };
+//     }
+//     catch (err) {
+//         return { status: 500, message: "Invalid Session" };
+//     }
+// }
 
-export async function sellerLogout() {
-    cookies().set("sellerToken", "", {
+export async function userLogout() {
+    cookies().set("userToken", "", {
         path: "/",
         maxAge: 0,
         sameSite: "lax",
