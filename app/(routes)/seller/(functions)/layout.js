@@ -1,3 +1,4 @@
+import UnauthorizedPage from "@/app/ui/Unauthorized";
 import SellerNavbar from "@/app/ui/seller/Navbar";
 import { sellerAuth } from "@/middlewares/auth";
 
@@ -6,9 +7,9 @@ import { sellerAuth } from "@/middlewares/auth";
 export default async function SellerLayout({ children }) {
     let authStatus = await sellerAuth();
     if (authStatus === false) {
-        return <div>
-            <h1>Unauthorized</h1>
-        </div>;
+        return (
+            <UnauthorizedPage />
+        )
     }
     else {
         return (
