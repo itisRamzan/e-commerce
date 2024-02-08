@@ -39,6 +39,7 @@ export async function addProduct(currentState, formData) {
                 product.availableQty += parseInt(stock);
                 product.img = res?.imageURL;
                 await product.save();
+                revalidatePath("/seller/products?page=1")
                 return { status: 200, message: "Product already exists, Stock and Image updated successfully!" };
             }
             else {
