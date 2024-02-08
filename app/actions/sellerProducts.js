@@ -17,10 +17,13 @@ export async function addProduct(currentState, formData) {
     let size = formData.get('size');
     let description = formData.get('description').trim();
     let image = formData.get('image');
-    let token = cookieStore.get('sellerToken').value;
+    let token = cookieStore.get('sellerToken')?.value;
+    if (token === null || token === undefined || token === "") {
+        return { status: 401, message: "Not Authorized" };
+    }
     let data = await getSeller(token);
     if (data.status !== 200) {
-        return { status: 400, message: "Please Login as a Seller" };
+        return { status: 401, message: "Not Authorized" };
     }
     let sellerID = data.id;
     if (sellerID === null || sellerID === undefined || sellerID === "") {
@@ -35,7 +38,7 @@ export async function addProduct(currentState, formData) {
             let res = await uploadImage(formData);
             let slug = name.replace(/\s+/g, '-').toLowerCase() + "-" + size.toLowerCase() + "-" + color.toLowerCase();
             let product = await Product.findOne({ slug: slug, seller: sellerID });
-            if (product !== null) { // if product already exists
+            if (product !== null) { // if product already exists then update stock and image
                 product.availableQty += parseInt(stock);
                 product.img = res?.imageURL;
                 await product.save();
@@ -84,7 +87,6 @@ export async function getProducts(currentPage) {
         }
     }
     catch (err) {
-        console.log(err.message)
         return { status: 500, message: "Internal server error" };
     }
 }

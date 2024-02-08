@@ -31,6 +31,20 @@ export default function AddProducts() {
                 },
             });
         }
+        else if (state?.status === 401) {
+            toast.error(state?.message, {
+                position: "top-right",
+                autoClose: 800,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                onClose: () => {
+                    router.push("/seller/login");
+                },
+            });
+        }
         else {
             toast.error(state?.message, {
                 position: "top-right",
