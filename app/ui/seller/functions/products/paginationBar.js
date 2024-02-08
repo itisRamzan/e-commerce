@@ -33,7 +33,7 @@ export default function PaginationBar({ productsLength, currentPage }) {
                             disabled={currentPage === 1}
                             onClick={(e) => {
                                 e.preventDefault();
-                                router.push(pathname + `?page=${currentPage - 1}` + "#myProducts")
+                                router.replace(pathname + `?page=${currentPage - 1}` + "#myProducts")
                             }}
                         >
                             Previous
@@ -44,12 +44,12 @@ export default function PaginationBar({ productsLength, currentPage }) {
                             <li key={i}>
                                 <button
                                     className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300  ${currentPage === i + 1
-                                        ? "bg-green-400 text-white"
+                                        ? "bg-red-400 text-white"
                                         : "hover:bg-gray-100 hover:text-gray-700"
                                         }`}
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        router.push(pathname + `?page=${i + 1}` + "#myProducts")
+                                        router.replace(pathname + `?page=${i + 1}` + "#myProducts")
                                     }}
                                 >
                                     {i + 1}
@@ -63,7 +63,7 @@ export default function PaginationBar({ productsLength, currentPage }) {
                             disabled={currentPage === noOfPages || noOfPages === 0}
                             onClick={(e) => {
                                 e.preventDefault();
-                                router.push(pathname + `?page=${currentPage + 1}` + "#myProducts")
+                                router.replace(pathname + `?page=${currentPage + 1}` + "#myProducts")
                             }}
                         >
                             Next

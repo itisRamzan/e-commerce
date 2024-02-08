@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getSignature } from "@/app/actions/uploadImage";
 import { IoCloseCircle } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 

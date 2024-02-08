@@ -4,17 +4,20 @@ import { sellerAuth } from "@/middlewares/auth";
 
 
 export default async function SellerLayout({ children }) {
-    const authStatus = await sellerAuth();
+    let authStatus = await sellerAuth();
     if (authStatus === false) {
-        return <div>Unauthorized</div>;
+        return <div>
+            <h1>Unauthorized</h1>
+        </div>;
     }
-
-    return (
-        <>
-            <SellerNavbar />
-            <div className="w-4/5 px-3 py-4 md:px-4 mx-auto">
-                {children}
-            </div>
-        </>
-    );
+    else {
+        return (
+            <>
+                <SellerNavbar />
+                <div className="w-4/5 px-3 py-4 md:px-4 mx-auto">
+                    {children}
+                </div>
+            </>
+        );
+    }
 }

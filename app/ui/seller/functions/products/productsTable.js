@@ -3,7 +3,7 @@ import PaginationBar from "./paginationBar";
 import Image from "next/image";
 
 
-export default async function ProductsTable({ currentPage }) {
+export default async function ProductsTable({ currentPage, searchParams }) {
     const data = await getProducts(currentPage);
     const products = data.products;
 
@@ -66,7 +66,7 @@ export default async function ProductsTable({ currentPage }) {
                     ))}
                 </tbody>
             </table>
-
+            <PaginationBar productsLength={data?.length || 0} currentPage={searchParams.page} />
         </>
     )
 }

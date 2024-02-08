@@ -1,7 +1,8 @@
+import { Suspense } from "react";
 import AddProducts from "./products/addProducts";
 import AllProducts from "./products/allProducts";
 
-export default function ProducstsPage({ props, searchParams }) {
+export default async function ProducstsPage({ props, searchParams }) {
     return (
         <>
             <div className="flex flex-col space-y-4">

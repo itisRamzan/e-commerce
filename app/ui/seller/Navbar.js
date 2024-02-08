@@ -1,5 +1,6 @@
 "use client"
 
+import { sellerLogout } from "@/app/actions/sellerAuth";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,22 +14,29 @@ export default function SellerNavbar() {
     const [loggingOut, setLoggingOut] = useState(false);
     const pathname = usePathname();
 
-    const handleLogout = () => {
-        setLoggingOut(true);
-        setTimeout(() => {
-            let allCookies = document.cookie.split(';');
-            for (let i = 0; i < allCookies.length; i++)
-                document.cookie = allCookies[i] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            setLoggingOut(false);
-            router.replace("/seller/login");
-        }, 500);
+    const handleLogout = async () => {
+        await sellerLogout().then(() => {
+            toast.success("Logged out successfully", {
+                position: "top-center",
+                autoClose: 800,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                onClose: () => {
+                    setLoggingOut(true);
+                    router.push("/seller/login");
+                }
+            });
+
+        })
     }
 
     return (
         <>
             <ToastContainer />
             <div className={` flex justify-center items-center h-screen ${loggingOut === true ? "" : "hidden"} `}>
-                <ToastContainer />
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
             </div>
             <div className="fixed top-0 z-50" >

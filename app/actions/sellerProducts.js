@@ -5,7 +5,7 @@ import connectDB from "./connectDB";
 import { cookies } from "next/headers";
 import { getSeller } from "./sellerAuth";
 import { getSignature, uploadImage } from "./uploadImage";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore } from "next/cache";
 
 export async function addProduct(currentState, formData) {
     const cookieStore = cookies();
@@ -66,6 +66,7 @@ export async function addProduct(currentState, formData) {
 }
 
 export async function getProducts(currentPage) {
+    unstable_noStore()
     try {
         await connectDB()
         const cookieStore = cookies();
@@ -75,6 +76,7 @@ export async function getProducts(currentPage) {
             let totalProducts = await Product.find({ seller: data.id }).countDocuments();
             let products = await Product.find({ seller: data.id }).sort({ createdAt: -1 }).skip((currentPage - 1) * 5).limit(5);
             products = JSON.parse(JSON.stringify(products));
+            await new Promise((resolve) => setTimeout(resolve, 4000));
             revalidatePath("/seller/products");
             return { status: 200, products: products, length: totalProducts };
         }

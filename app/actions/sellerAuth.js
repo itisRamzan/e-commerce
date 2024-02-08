@@ -95,3 +95,13 @@ export async function getSeller(token) {
         return { status: 500, message: "Invalid Session" };
     }
 }
+
+export async function sellerLogout() {
+    cookies().set("sellerToken", "", {
+        path: "/",
+        maxAge: 0,
+        sameSite: "lax",
+        httpOnly: true
+    });
+    return { status: 200, message: "Logout successful" };
+}
