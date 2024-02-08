@@ -55,7 +55,7 @@ export async function addProduct(currentState, formData) {
                     seller: sellerID
                 })
                 await newProduct.save();
-                revalidatePath("/seller/products#myProducts");
+                revalidatePath("/seller/products");
                 return { status: 200, message: "Product added successfully" };
             }
         }
@@ -66,7 +66,6 @@ export async function addProduct(currentState, formData) {
 }
 
 export async function getProducts(currentPage) {
-    unstable_noStore()
     try {
         await connectDB()
         const cookieStore = cookies();
@@ -76,7 +75,6 @@ export async function getProducts(currentPage) {
             let totalProducts = await Product.find({ seller: data.id }).countDocuments();
             let products = await Product.find({ seller: data.id }).sort({ createdAt: -1 }).skip((currentPage - 1) * 5).limit(5);
             products = JSON.parse(JSON.stringify(products));
-            await new Promise((resolve) => setTimeout(resolve, 4000));
             revalidatePath("/seller/products");
             return { status: 200, products: products, length: totalProducts };
         }

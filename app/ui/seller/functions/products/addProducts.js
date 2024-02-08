@@ -28,7 +28,6 @@ export default function AddProducts() {
                 onClose: () => {
                     setImage("");
                     document.getElementById("addProductForm").reset();
-                    router.push("/seller/products#myProducts");
                 },
             });
         }
