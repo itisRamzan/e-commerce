@@ -44,9 +44,9 @@ export default function PaginationBar({ productsLength, currentPage }) {
                         return (
                             <li key={i}>
                                 <button
-                                    className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300  ${currentPage === i + 1
-                                        ? "bg-white text-green-600 shadow-lg -mt-2 mx-0"
-                                        : "hover:bg-gray-100 hover:text-gray-700"
+                                    className={`flex items-center justify-center px-3 h-8 text-gray-500 bg-white border border-gray-300  ${currentPage === i + 1
+                                        ? "bg-white text-green-600 shadow-lg -mt-3 mx-0"
+                                        : "hover:bg-gray-100 hover:text-gray-700 m-0"
                                         }`}
                                     onClick={(e) => {
                                         e.preventDefault();

@@ -46,7 +46,7 @@ export default function SellerNavbar() {
                         onClick={() => setShowNavbar(!showNavbar)}
                     />
                 </div>
-                <div className={` shadow-sm bg-blue-400 rounded-r-3xl min-h-screen overflow-auto transition-all w-40 fixed z-50 flex flex-col space-y-2  ${showNavbar === false ? "-left-96" : "left-0"} `}>
+                <div className={` shadow-sm border-2 border-gray-400 bg-blue-200 rounded-r-3xl min-h-screen overflow-auto transition-all w-40 fixed z-50 flex flex-col space-y-2  ${showNavbar === false ? "-left-96" : "left-0"} `}>
                     <div className="w-full p-5">
                         <GoSidebarExpand color="black" size={35}
                             className={`cursor-pointer absolute top-3 left-2 `}
@@ -55,36 +55,36 @@ export default function SellerNavbar() {
                     </div>
                     <div className="flex flex-col text-center w-full py-2 font-semibold">
                         <Link href="/seller/dashboard"
-                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/dashboard" ? "bg-blue-300 text-white" : ""}
+                            className={`cursor-pointer p-2 hover:bg-blue-500 hover:text-white
+                            ${pathname === "/seller/dashboard" ? "bg-blue-500 text-white" : ""}
                             `}
                         >
                             Home
                         </Link>
                         <Link href="/seller/products"
-                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/products" ? "bg-blue-300 text-white" : ""}
+                            className={`cursor-pointer p-2 hover:bg-blue-500 hover:text-white
+                            ${pathname === "/seller/products" ? "bg-blue-500 text-white" : ""}
                             `}
                         >
                             Products
                         </Link>
                         <Link href="/seller/orders"
-                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/orders" ? "bg-blue-300 text-white" : ""}
+                            className={`cursor-pointer p-2 hover:bg-blue-500 hover:text-white
+                            ${pathname === "/seller/orders" ? "bg-blue-500 text-white" : ""}
                             `}
                         >
                             Orders
                         </Link>
                         <Link href="/seller/customers"
-                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/customers" ? "bg-blue-300 text-white" : ""}
+                            className={`cursor-pointer p-2 hover:bg-blue-500 hover:text-white
+                            ${pathname === "/seller/customers" ? "bg-blue-500 text-white" : ""}
                             `}
                         >
                             Customers
                         </Link>
                         <Link href="/seller/settings"
-                            className={`cursor-pointer p-2 hover:bg-blue-300 hover:text-white
-                            ${pathname === "/seller/settings" ? "bg-blue-300 text-white" : ""}
+                            className={`cursor-pointer p-2 hover:bg-blue-500 hover:text-white
+                            ${pathname === "/seller/settings" ? "bg-blue-500 text-white" : ""}
                             `}
                         >
                             Settings
