@@ -36,7 +36,7 @@ export default function UserNavbar(props) {
     return (
         <>
             <ToastContainer />
-            <div className="flex flex-row w-fit mx-auto mb-2 md:mb-4 sticky top-4 overflow-x-auto space-x-0 max-md:hidden">
+            <div className="flex flex-row w-fit mx-auto mb-2 md:mb-4 sticky top-4 overflow-x-auto space-x-0 max-md:hidden z-50">
                 <Link href={"/"}
                     className={` bg-blue-400 text-white px-4 py-2 border-l-2 rounded-l-full border-r-0 border-x-0 mx-0
                     ${pathname === "/" ? "bg-blue-700" : "hover:bg-blue-700"}
@@ -96,45 +96,43 @@ export default function UserNavbar(props) {
                 }
             </div>
 
-            <div className="flex flex-row items-center w-full bg-blue-400 fixed bottom-[0px] justify-between md:hidden overflow-x-auto p-1">
+            <div className="flex flex-row items-center w-full bg-blue-400 fixed bottom-[0px] justify-between md:hidden overflow-x-auto p-1 z-50">
                 <Link href={"/"}
-                    className={` bg-blue-400 text-white p-1
-                    ${pathname === "/" ? "text-black" : ""}
-                    `}
+                    className="bg-blue-400 text-white p-1"
                 >
-                    <GoHomeFill size={40} />
+                    <GoHomeFill size={40}
+                        className={` ${pathname === "/" ? "text-black" : "text-white"} `}
+                    />
                 </Link>
                 <Link href={"/tshirts"}
-                    className={` bg-blue-400 text-white p-1
-                    ${pathname === "/tshirts" ? "text-black" : ""}
-                    `}
+                    className="bg-blue-400 text-white p-1"
                 >
-                    <IoShirtOutline size={40}  />
+                    <IoShirtOutline size={40}
+                        className={` ${pathname === "/tshirts" ? "text-black" : "text-white"} `} />
                 </Link>
                 <Link href={"/shirts"}
-                    className={` bg-blue-400 text-white p-1 
-                    border-x-0
-                    ${pathname === "/shirts" ? "text-black" : ""}
-                    `}
+                    className="bg-blue-400 text-white p-1"
                 >
-                    <RiShirtLine size={40} />
+                    <RiShirtLine size={40}
+                        className={` ${pathname === "/shirts" ? "text-black" : "text-white"} `}
+                    />
                 </Link>
                 <Link href={"/pants"}
-                    className={` bg-blue-400 text-white p-1 
-                    ${pathname === "/pants" ? "text-black" : ""}
-                    `}
+                    className="bg-blue-400 text-white p-1"
                 >
-                    <PiPants size={40} />
+                    <PiPants size={40}
+                        className={` ${pathname === "/pants" ? "text-black" : "text-white"} `}
+                    />
                 </Link>
                 {
                     isUserLoggedIn ? (
                         <>
                             <Link href={"/userProfile"}
-                                className={` bg-blue-400 text-white p-1
-                            ${pathname === "/userProfile" ? "text-black" : ""}
-                            `}
+                                className="bg-blue-400 text-white p-1"
                             >
-                                <CgProfile size={40} />
+                                <CgProfile size={40}
+                                    className={` ${pathname === "/userProfile" ? "text-black" : "text-white"} `}
+                                />
                             </Link>
                             <button
                                 className="bg-blue-400 text-white p-1"

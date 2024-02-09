@@ -1,8 +1,9 @@
+import TShirtsPage from "@/app/ui/user/products/tshirts";
 
 export default async function TShirtPage() {
     return (
         <>
-            These are the t-shirts
+            <TShirtsPage />
         </>
     );
 }

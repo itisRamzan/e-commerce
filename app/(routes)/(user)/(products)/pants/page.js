@@ -1,8 +1,10 @@
+import PantsPage from "@/app/ui/user/products/pants";
 
-export default async function PantsPage() {
+
+export default async function PantPage() {
     return (
         <>
-            These are the pants
+            <PantsPage />
         </>
     );
 }
