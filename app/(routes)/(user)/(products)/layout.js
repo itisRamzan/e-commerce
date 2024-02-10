@@ -1,4 +1,5 @@
 import UserNavbar from "@/app/ui/user/Navbar";
+import UserCart from "@/app/ui/user/cart";
 import { userAuth } from "@/middlewares/auth";
 
 
@@ -8,9 +9,10 @@ export default async function SellerLayout({ children }) {
     return (
         <>
             <UserNavbar isAuth={isAuth} />
-            <div className="w-4/5 px-3 py-4 md:px-4 mx-auto">
+            <div>
                 {children}
             </div>
+            <UserCart />
         </>
     );
 }

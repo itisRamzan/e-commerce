@@ -37,3 +37,37 @@ export async function getProducts(category) {
         return { status: 500, data: { message: "Internal Server Error" } }
     }
 }
+
+export async function getProduct(slug) {
+    try {
+        await connectDB();
+        let product = await Product.findOne({ slug: slug });
+        if (product === null) {
+            return {
+                props: {
+                    error: "Product not found"
+                }
+            }
+        }
+        let variants = await Product.find({ title: product.title, category: product.category });
+        let colorSizeSlug = {};
+        for (let item of variants) {
+            if (Object.keys(colorSizeSlug).includes(item.color)) {
+                colorSizeSlug[item.color][item.size] = { slug: item.slug }
+            }
+            else {
+                colorSizeSlug[item.color] = {}
+                colorSizeSlug[item.color][item.size] = { slug: item.slug }
+            }
+        }
+        return {
+            status: 200,
+            product: JSON.parse(JSON.stringify(product)),
+            variants: JSON.parse(JSON.stringify(variants)),
+            colorSizeSlug: JSON.parse(JSON.stringify(colorSizeSlug))
+        }
+    }
+    catch (error) {
+        return { status: 500, message: "Internal Server Error" }
+    }
+}
