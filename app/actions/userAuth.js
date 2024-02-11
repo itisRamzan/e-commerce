@@ -86,15 +86,17 @@ export async function userLogin(currentState, formData) {
     }
 }
 
-// export async function getSeller(token) {
-//     try {
-//         let decoded = jwt.verify(token, jwt_secret);
-//         return { status: 200, id: decoded.id };
-//     }
-//     catch (err) {
-//         return { status: 500, message: "Invalid Session" };
-//     }
-// }
+export async function getUser(token) {
+    try {
+        await connectDB();
+        let decoded = jwt.verify(token, jwt_secret);
+        let user = await User.findById(decoded.id).select("-password");
+        return { status: 200, id: decoded.id, user: user };
+    }
+    catch (err) {
+        return { status: 500, message: "Invalid Session" };
+    }
+}
 
 export async function userLogout() {
     cookies().set("userToken", "", {

@@ -82,7 +82,7 @@ const IndividualProductPage = (props) => {
             color: props.product.color,
             category: props.product.category
         })
-        // router.push("/checkout");
+        router.push("/checkout");
     }
 
     useEffect(() => {
@@ -209,14 +209,14 @@ const IndividualProductPage = (props) => {
                                 {props.product.availableQty <= 0 && <span className="max-md:text-sm font-medium text-2xl text-gray-900">Out of Stock!</span>}
                                 <button
                                     disabled={props.product.availableQty <= 0}
-                                    className="flex ml-6 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded disabled:bg-blue-400 disabled:cursor-not-allowed max-md:px-2"
+                                    className="flex ml-6 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded disabled:bg-blue-400 disabled:cursor-not-allowed max-md:px-2 text-nowrap"
                                     onClick={buyNow}
                                 >
                                     Buy Now
                                 </button>
                                 <button
                                     disabled={props.product.availableQty <= 0}
-                                    className="flex ml-6 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded disabled:bg-blue-400 disabled:cursor-not-allowed max-md:px-2"
+                                    className="flex ml-6 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded disabled:bg-blue-400 disabled:cursor-not-allowed max-md:px-2 text-nowrap"
                                     onClick={addToCart}
                                 >
                                     Add To Cart
