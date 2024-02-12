@@ -36,7 +36,7 @@ export default function LoginForm() {
                 draggable: true,
                 progress: undefined,
                 onClose: () => {
-                    // document.getElementById("loginForm").reset();
+                    document.getElementById("loginForm").reset();
                 },
             });
         }
@@ -50,8 +50,8 @@ export default function LoginForm() {
                 draggable: false,
                 progress: undefined,
                 onClose: () => {
-                    // document.getElementById("loginForm").reset();
-                    // router.replace("/");
+                    document.getElementById("loginForm").reset();
+                    router.replace("/");
                 },
             });
         }
