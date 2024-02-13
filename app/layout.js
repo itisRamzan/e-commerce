@@ -1,5 +1,7 @@
 import LoadingBar from "react-top-loading-bar";
 import "./ui/globals.css";
+import TopLoadingBar from "./ui/TopLoadingBar";
+import NextTopLoader from 'nextjs-toploader';
 
 
 export const metadata = {
@@ -12,6 +14,8 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
+                {/* <TopLoadingBar /> */}
+                <NextTopLoader />
                 {children}
             </body>
         </html>
