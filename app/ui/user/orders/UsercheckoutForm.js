@@ -10,6 +10,7 @@ import { useFormState } from "react-dom";
 import { createOrder, inititateCheckoutPayment, postTransaction, revokeTransaction } from "@/app/actions/checkout";
 import { PaymentButton } from "./paymentButton";
 import { useRouter } from "next/navigation";
+import { fetchUserDetails } from "@/app/actions/userAuth";
 
 
 
@@ -20,6 +21,7 @@ export default function UsercheckoutForm(props) {
     let [city, setCity] = useState("");
     let [state, setState] = useState("");
     let [pincodeError, setPincodeError] = useState(false);
+    const [useDefaultAddress, setUseDefaultAddress] = useState(false);
     const router = useRouter();
 
 
@@ -28,28 +30,32 @@ export default function UsercheckoutForm(props) {
     }, []) // to close the cart when the checkout page is loaded
 
     useEffect(() => {
-        if (pincode.length === 6) {
-            getServicablePincode(pincode).then((res) => {
-                if (res === true) {
-                    getPincodeDetails(pincode).then((res) => {
-                        setCity(res.city);
-                        setState(res.state);
-                        setPincodeError(false);
-                    })
-                }
-                else {
-                    setCity("");
-                    setState("");
-                    setPincodeError(true);
-                    setTimeout(() => {
-                        setPincodeError(false);
-                    }, 2000)
-                }
-            })
+        if (typeof pincode === "number") {
         }
         else {
-            setCity("");
-            setState("");
+            if (pincode.length === 6) {
+                getServicablePincode(pincode).then((res) => {
+                    if (res === true) {
+                        getPincodeDetails(pincode).then((res) => {
+                            setCity(res.city);
+                            setState(res.state);
+                            setPincodeError(false);
+                        })
+                    }
+                    else {
+                        setCity("");
+                        setState("");
+                        setPincodeError(true);
+                        setTimeout(() => {
+                            setPincodeError(false);
+                        }, 2000)
+                    }
+                })
+            }
+            else {
+                setCity("");
+                setState("");
+            }
         }
     }, [pincode]); // to get the city and state of the pincode entered
 
@@ -226,6 +232,29 @@ export default function UsercheckoutForm(props) {
     }, [initState]); // to handle the payment process
 
 
+    useEffect(() => {
+        if (useDefaultAddress === true) {
+            fetchUserDetails().then((res) => {
+                document.querySelector('input[name="name"]').value = res.user?.name;
+                document.querySelector('textarea[name="address"]').value = res.user?.address;
+                document.querySelector('input[name="phoneno"]').value = res.user?.phoneno;
+                document.querySelector('input[name="pincode"]').value = res.user?.pincode;
+                setPincode(res.user?.pincode);
+                getPincodeDetails(res.user?.pincode).then((res) => {
+                    setCity(res.city);
+                    setState(res.state);
+                })
+            })
+        }
+        else {
+            document.querySelector('input[name="name"]').value = "";
+            document.querySelector('textarea[name="address"]').value = "";
+            document.querySelector('input[name="phoneno"]').value = "";
+            setPincode("");
+            setCity("");
+            setState("");
+        }
+    }, [useDefaultAddress]); // to handle the use default address checkbox
 
     return (
         <>
@@ -240,6 +269,21 @@ export default function UsercheckoutForm(props) {
                             <div className="address">
                                 <div className="text-xl font-semibold">
                                     1. Shipping Address
+                                    <p className="text-sm font-thin flex ">
+                                        <label htmlFor="useDefaultAddress">
+                                            Use your default address?
+                                        </label>
+                                        <input
+                                            type="checkbox"
+                                            name="useDefaultAddress"
+                                            id="useDefaultAddress"
+                                            className="mx-1"
+                                            checked={useDefaultAddress}
+                                            onChange={(e) => {
+                                                setUseDefaultAddress(e.target.checked)
+                                            }}
+                                        />
+                                    </p>
                                 </div>
                                 <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2 my-2">
                                     <div className="w-full md:w-1/2">
@@ -270,6 +314,7 @@ export default function UsercheckoutForm(props) {
                                         cols="30" rows="2"
                                         className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                         required
+                                        minLength={10}
                                     ></textarea>
                                 </div>
                                 <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:justify-between my-2">

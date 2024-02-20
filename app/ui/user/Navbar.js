@@ -2,33 +2,26 @@
 
 import { userLogout } from "@/app/actions/userAuth";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import { IoShirtOutline } from "react-icons/io5";
-import { RiShirtLine } from "react-icons/ri";
-import { PiPants } from "react-icons/pi";
-import { CgProfile } from "react-icons/cg";
-import { CiLogin, CiLogout } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function UserNavbar(props) {
     let pathname = usePathname();
     let isUserLoggedIn = props.isAuth;
-    let router = useRouter();
-    const handleLogout = () => {
-        userLogout().then((res) => {
+
+    const handleLogout = async () => {
+        await userLogout().then((res) => {
             toast.success(res.message, {
                 position: "top-right",
-                autoClose: 800,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
                 draggable: false,
-                progress: undefined,
-                onClose: () => {
-                    window.location.reload();
-                },
+                progress: undefined
             });
         });
     };
@@ -110,47 +103,6 @@ export default function UserNavbar(props) {
                     <IoShirtOutline size={40}
                         className={` ${pathname === "/tshirts" ? "text-black" : "text-white"} `} />
                 </Link>
-                <Link href={"/shirts"}
-                    className="bg-blue-400 text-white p-1"
-                >
-                    <RiShirtLine size={40}
-                        className={` ${pathname === "/shirts" ? "text-black" : "text-white"} `}
-                    />
-                </Link>
-                <Link href={"/pants"}
-                    className="bg-blue-400 text-white p-1"
-                >
-                    <PiPants size={40}
-                        className={` ${pathname === "/pants" ? "text-black" : "text-white"} `}
-                    />
-                </Link>
-                {
-                    isUserLoggedIn ? (
-                        <>
-                            <Link href={"/userProfile"}
-                                className="bg-blue-400 text-white p-1"
-                            >
-                                <CgProfile size={40}
-                                    className={` ${pathname === "/userProfile" ? "text-black" : "text-white"} `}
-                                />
-                            </Link>
-                            <button
-                                className="bg-blue-400 text-white p-1"
-                                onClick={handleLogout}
-                            >
-                                <CiLogout size={40} />
-                            </button>
-                        </>
-                    ) : (
-                        <Link href={"/login"}
-                            className={` bg-blue-400 text-white hover:bg-blue-400 p-1 flex text-center items-center justify-center
-                            ${pathname === "/login" ? "bg-blue-700" : ""}
-                            `}
-                        >
-                            <CiLogin size={40} />
-                        </Link>
-                    )
-                }
             </div>
         </>
     );

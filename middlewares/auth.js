@@ -3,7 +3,7 @@
 import { cookies } from "next/headers"
 
 export async function userAuth() {
-    if (cookies().get("userToken")) {
+    if (cookies().get("userToken") && cookies().get("userToken").value) {
         return true;
     }
     else {
@@ -12,7 +12,7 @@ export async function userAuth() {
 }
 
 export async function sellerAuth() {
-    if (cookies().get("sellerToken")) {
+    if (cookies().get("sellerToken") && cookies().get("sellerToken").value) {
         return true;
     }
     else {

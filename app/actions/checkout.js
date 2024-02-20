@@ -1,7 +1,7 @@
 "use server"
 
 import Product from "@/models/Product";
-import { getPincodeDetails } from "./pincodes"
+import { getPincodeDetails, getServicablePincode } from "./pincodes"
 import connectDB from "./connectDB";
 import { cookies } from "next/headers";
 import { getUser } from "./userAuth";
@@ -17,8 +17,8 @@ export async function inititateCheckoutPayment(currentState, formData) {
         let addressInp = formData.get("address");
         let phoneInp = formData.get("phoneno");
         let pincodeInp = formData.get("pincode");
-        if (nameInp.length < 3 || addressInp.length === 10 || phoneInp.length !== 10 || pincodeInp.length !== 6) {
-            return { status: 400, message: "Please Check your fields" };
+        if (nameInp.length < 3 || addressInp.length < 10 || phoneInp.length !== 10 || pincodeInp.length !== 6) {
+            return { status: 400, message: "Please Check your Name, Address and Phone Number" };
         }
         await connectDB();
         let subT = formData.get("subTotal");
@@ -33,6 +33,10 @@ export async function inititateCheckoutPayment(currentState, formData) {
             return { status: 500, message: "The price of items in your cart have been changed, Please try again" };
         }
         let pincode = formData.get("pincode");
+        let pincodeServicable = await getServicablePincode(pincode);
+        if (!pincodeServicable) {
+            return { status: 400, message: "We do not deliver to your location" };
+        }
         let pincodeDetails = await getPincodeDetails(pincode);
         let address = formData.get("address");
         let totalAddress = address + ", " + pincodeDetails.city + ", " + pincodeDetails.state;

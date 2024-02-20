@@ -3,6 +3,7 @@
 import User from "@/models/User";
 import connectDB from "./connectDB";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -105,5 +106,24 @@ export async function userLogout() {
         sameSite: "lax",
         httpOnly: true
     });
+    revalidatePath("/");
     return { status: 200, message: "Logout successful" };
+}
+
+export async function fetchUserDetails() {
+    let token = cookies().get("userToken");
+    if (token && token.value) {
+        try {
+            await connectDB();
+            let decoded = jwt.verify(token.value, jwt_secret);
+            let user = await User.findById(decoded.id).select("-password");
+            return { status: 200, user: JSON.parse(JSON.stringify(user)) };
+        }
+        catch (err) {
+            return { status: 500, message: "Invalid Session" };
+        }
+    }
+    else {
+        return { status: 400, message: "Invalid Session" };
+    }
 }
