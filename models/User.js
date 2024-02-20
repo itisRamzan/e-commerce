@@ -23,6 +23,9 @@ const UserSchema = new mongoose.Schema({
     pincode: {
         type: Number,
     },
+    passwordResetToken: {
+        type: String,
+    },
 },{
     timestamps: true,
 });

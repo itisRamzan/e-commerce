@@ -18,7 +18,7 @@ export async function inititateCheckoutPayment(currentState, formData) {
         let phoneInp = formData.get("phoneno");
         let pincodeInp = formData.get("pincode");
         if (nameInp.length < 3 || addressInp.length < 10 || phoneInp.length !== 10 || pincodeInp.length !== 6) {
-            return { status: 400, message: "Please Check your Name, Address and Phone Number" };
+            return { status: 400, message: "Please Check your details" };
         }
         await connectDB();
         let subT = formData.get("subTotal");
