@@ -1,8 +1,8 @@
-# E-Commerce
+# 📢 E-Commerce
 
 A robust e-commerce platform built using Next.js, MongoDB, and other technologies for seamless online shopping experiences.
 
-## Features
+## 🚀 Features
 
 - **User Authentication**: Secure user sign-up and login functionality using bcrypt for password hashing and JWT for session management.
 - **Product Management**: CRUD operations for products with image uploading capabilities using Cloudinary.
@@ -12,7 +12,7 @@ A robust e-commerce platform built using Next.js, MongoDB, and other technologie
 - **State Management**: Zustand for efficient state management within the React components.
 - **Toast Notifications**: React Toastify for displaying non-intrusive notifications to users.
 
-## Technologies Used
+## 🛠️ Technologies Used
 
 - **Next.js**: React framework for server-side rendering and frontend logic.
 - **MongoDB**: NoSQL database for storing product information and user data.
@@ -21,7 +21,7 @@ A robust e-commerce platform built using Next.js, MongoDB, and other technologie
 - **Tailwind CSS**: Utility-first CSS framework for styling components.
 - **Zustand**: State management library for React applications.
 
-## Installation
+## ⬇️ Installation
 
 1. Clone the repository:
   ```bash
@@ -53,17 +53,17 @@ npm run dev
 ```
 5. Open your browser and visit ```http://localhost:3000``` to view the app.
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps to contribute:
 
 1. Fork the repository
-2. Create a new branch (git checkout -b feature/YourFeature)
-3. Commit your changes (git commit -m 'Add some feature')
-4. Push to the branch (git push origin feature/YourFeature)
+2. Create a new branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
 5. Open a pull request
 
-## Contact
+## 👉 Contact
 
 For any inquiries or feedback, please reach out to:
 - **Name**: Mohd Ramzan Shareef
